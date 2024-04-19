@@ -1,0 +1,115 @@
+package com.dealer_service.controller;
+
+import com.dealer_service.feignproxy.CarServiceProxy;
+import com.dealer_service.model.CarDetail;
+import com.dealer_service.model.CardInfoResponse;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+
+@RestController
+@RequestMapping("/dealer")
+public class DealerController {
+
+    @Autowired
+    CarServiceProxy carServiceProxy;
+
+    @Autowired
+    RestTemplate restTemplate;
+
+    @GetMapping("/info/brand/{brand}/quantity/{quantity}")
+    public CardInfoResponse getCardInfo(@PathVariable String brand,
+                                        @PathVariable BigDecimal quantity){
+
+
+        HashMap<String, String> uriVariable =new HashMap<>();
+        uriVariable.put("name", brand);
+
+        ResponseEntity<CarDetail> forEntity = new RestTemplate().getForEntity(
+                "http://localhost:8000/car_service/{name}",
+                CarDetail.class,
+                uriVariable);
+
+
+        CarDetail carDetail = forEntity.getBody();
+
+        return new CardInfoResponse.CardInfoResponseBuilder()
+                .setBrand(carDetail.getBrand())
+                .setModel(carDetail.getModel())
+                .setQuantity(quantity)
+                .setPerUnit(carDetail.getPrice())
+                .setTotal(quantity.multiply(carDetail.getPrice()))
+                .setEnvironment(carDetail.getEnvironment())
+                .build();
+
+
+    }
+
+    // Good standart to create bean of rest tamplate and use it
+    //also help zipkin to trace the flow of microservice
+    @GetMapping("/info_builder/brand/{brand}/quantity/{quantity}")
+    public CardInfoResponse getCardInfoWithTemplateBuilder(@PathVariable String brand,
+                                        @PathVariable BigDecimal quantity){
+
+
+        HashMap<String, String> uriVariable =new HashMap<>();
+        uriVariable.put("name", brand);
+
+        ResponseEntity<CarDetail> forEntity =restTemplate.getForEntity(
+                "http://localhost:8000/car_service/{name}",
+                CarDetail.class,
+                uriVariable);
+
+
+        CarDetail carDetail = forEntity.getBody();
+
+        return new CardInfoResponse.CardInfoResponseBuilder()
+                .setBrand(carDetail.getBrand())
+                .setModel(carDetail.getModel())
+                .setQuantity(quantity)
+                .setPerUnit(carDetail.getPrice())
+                .setTotal(quantity.multiply(carDetail.getPrice()))
+                .setEnvironment(carDetail.getEnvironment())
+                .build();
+
+
+    }
+
+
+
+    @GetMapping("/info_feign/brand/{brand}/quantity/{quantity}")
+    @RateLimiter(name = "info_feign")
+    @Retry(name = "info_feign", fallbackMethod = "fallbackcall")
+    public CardInfoResponse getCardInfoUsingFeign(@PathVariable String brand,
+                                        @PathVariable BigDecimal quantity){
+
+        CarDetail carDetail = carServiceProxy.getCarDetail(brand);
+
+        return new CardInfoResponse.CardInfoResponseBuilder()
+                .setBrand(carDetail.getBrand())
+                .setModel(carDetail.getModel())
+                .setQuantity(quantity)
+                .setPerUnit(carDetail.getPrice())
+                .setTotal(quantity.multiply(carDetail.getPrice()))
+                .setEnvironment(carDetail.getEnvironment())
+                .build();
+
+
+    }
+
+    private CardInfoResponse fallbackcall(Exception ex){
+
+        System.out.println("inside fallbackcall------------------->");
+        return new CardInfoResponse.CardInfoResponseBuilder().build();
+    }
+}

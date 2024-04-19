@@ -1,0 +1,16 @@
+
+
+java:S2259/"GA "NullPointerException" could be thrown; "carDetail" is nullable here.(àÉ‹×ıÿÿÿÿ8ô¬ôƒï1J$54cf0698-a720-4184-aa3c-1e8cb744a83c
+
+java:S2259M"GA "NullPointerException" could be thrown; "carDetail" is nullable here.(àÉ‹×ıÿÿÿÿ8¹¤ºÿî1J$9b707b78-df80-4ad8-b34e-96e2a4d9bf53
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8¾¤ºÿî1J$00e0ce42-d3e1-432f-ba07-fce4a52d9949
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8İÃòƒï1J$63002c69-9967-4f2e-b2fd-9844bc838e14
+l
+java:S1172n")Remove this unused method parameter "ex".(æşî‰8Ô¤ºÿî1J$dfb3c107-e259-4611-b5a5-428e01e14a41
+m	java:S106p"+Replace this use of System.out by a logger.(®ó…Ã8×‘Ëÿî1J$dd4e04ba-79cc-4b75-8734-0c02991fc865
+Ÿ
+java:S1128"\Remove this unused import 'io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker'.(›èÌÇ8•­ôƒï1J$14938a12-d181-4e35-9886-633687fa8813
+t
+java:S1144n"1Remove this unused private "fallbackcall" method.(æşî‰8×¤ºÿî1J$5c4a3120-1cee-4fe3-9c16-6a993a5a8b6a

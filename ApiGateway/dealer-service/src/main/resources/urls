@@ -1,0 +1,15 @@
+car_service : 8000
+dealer_service : 8100
+
+http://localhost:8000/car_service/ford
+http://localhost:8100/dealer/info/brand/bmw/quantity/3
+http://localhost:8100/dealer/info_feign/brand/tata/quantity/3
+
+Eureka -->
+http://localhost:8761/
+
+api gateway -->
+http://localhost:8765/car-service/car_service/ford
+http://localhost:8765/dealer-service/dealer/info/brand/bmw/quantity/3
+http://localhost:8765/dealer-service/dealer/info_feign/brand/tata/quantity/3
+http://localhost:8765/car/ford

@@ -1,0 +1,21 @@
+
+s
+java:S1192$"QDefine a constant instead of duplicating this literal "lb://car-service" 3 times.(¥…Ùúÿÿÿÿ8¦àØ‹ï1
+d
+java:S1854("BRemove this useless assignment to local variable "routeFunction4".(Ì÷×øÿÿÿÿ8µàØ‹ï1
+_
+java:S1854""BRemove this useless assignment to local variable "routeFunction3".(Ò ù8¶àØ‹ï1
+d
+java:S1854"BRemove this useless assignment to local variable "routeFunction2".(ğß…øÿÿÿÿÿ8¶àØ‹ï1
+_
+java:S1854"BRemove this useless assignment to local variable "routeFunction1".(Ö¦Ñæ8¶àØ‹ï1
+]	java:S125"<This block of commented-out lines of code should be removed.(ÓĞ‹ùúÿÿÿÿ8¹àØ‹ï1
+P
+java:S1481"3Remove this unused "routeFunction1" local variable.(Ö¦Ñæ8¾àØ‹ï1
+U
+java:S1481"3Remove this unused "routeFunction2" local variable.(ğß…øÿÿÿÿÿ8ÀàØ‹ï1
+P
+java:S1481""3Remove this unused "routeFunction3" local variable.(Ò ù8ÁàØ‹ï1
+U
+java:S1481("3Remove this unused "routeFunction4" local variable.(Ì÷×øÿÿÿÿ8ÂàØ‹ï1
+]	java:S1255"<This block of commented-out lines of code should be removed.(¶ß‘şÿÿÿÿ8ÃàØ‹ï1

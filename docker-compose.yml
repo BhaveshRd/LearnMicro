@@ -1,0 +1,54 @@
+version: '3.8'
+services:
+   car-service:
+    image: bhaveshrd/mmv1-car-service:0.0.1-SNAPSHOT
+    ports:
+      - "8000:8000"
+    mem_limit: 700m
+    networks:
+      - car-factory-networks
+    environment:
+       EUREKA.CLIENT.SERVICE-URL.DEFAULTZONE: http://naming-server:8761/eureka/
+       MANAGEMENT.ZIPKIN.TRACING.ENDPOINT: http://zipkin-server:9411/api/v2/spans
+   
+   dealer-service:
+    image: bhaveshrd/mmv1-dealer-service:0.0.1-SNAPSHOT
+    ports:
+      - "8100:8100"
+    mem_limit: 700m
+    networks:
+      - car-factory-networks
+    environment:
+       EUREKA.CLIENT.SERVICE-URL.DEFAULTZONE: http://naming-server:8761/eureka/
+       MANAGEMENT.ZIPKIN.TRACING.ENDPOINT: http://zipkin-server:9411/api/v2/spans
+       
+   api-gateway:
+    image: bhaveshrd/mmv1-api-gateway:0.0.1-SNAPSHOT
+    ports:
+      - "8765:8765"
+    mem_limit: 700m
+    networks:
+      - car-factory-networks
+    environment:
+       EUREKA.CLIENT.SERVICE-URL.DEFAULTZONE: http://naming-server:8761/eureka/
+       MANAGEMENT.ZIPKIN.TRACING.ENDPOINT: http://zipkin-server:9411/api/v2/spans
+     
+   naming-server:
+    image: bhaveshrd/mmv1-naming-server:0.0.1-SNAPSHOT
+    ports:
+      - "8761:8761"
+    mem_limit: 700m
+    networks:
+      - car-factory-networks
+    
+   zipkin-server:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    mem_limit: 300m
+    networks:
+      - car-factory-networks
+
+
+networks:
+  car-factory-networks:
